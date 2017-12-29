@@ -2,8 +2,8 @@
 
 var test = require('tape');
 var nano = require('./');
-var gutil = require('gulp-util');
-var Stream = require('stream');
+var Vinyl = require('vinyl');
+var ReadableStream = require('stream').Readable;
 var sourcemaps = require('gulp-sourcemaps');
 
 var css = 'h1\n{\n    color: white\n}\n';
@@ -12,7 +12,7 @@ var expected = 'h1{color:#fff}';
 var sourceMapRegex = /sourceMappingURL=data:application\/json;/;
 
 function fixture (contents) {
-    return new gutil.File({
+    return new Vinyl({
         contents: contents,
         cwd: __dirname,
         base: __dirname,
@@ -79,7 +79,7 @@ test('should throw an error in stream mode', function (t) {
 
     var stream = nano();
 
-    var file = fixture(new Stream());
+    var file = fixture(new ReadableStream());
 
     var write = function () {
         stream.write(file);
