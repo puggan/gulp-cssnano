@@ -31,6 +31,7 @@
   },
   "repository": "ben-eb/gulp-cssnano",
   "dependencies": {
+    "buffer-from": "^1.0.0",
     "cssnano": "^3.0.0",
     "object-assign": "^4.0.1",
     "plugin-error": "^1.0.1",

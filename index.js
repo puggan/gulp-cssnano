@@ -1,6 +1,7 @@
 'use strict';
 
 var nano        = require('cssnano'),
+    bufferFrom  = require('buffer-from'),
     assign      = require('object-assign'),
     PluginError = require('plugin-error'),
     Transform   = require('stream').Transform,
@@ -20,7 +21,7 @@ module.exports = function (opts) {
             var error = 'Streaming not supported';
             return cb(new PluginError(PLUGIN_NAME, error));
         } else if (file.isBuffer()) {
-            nano.process(String(file.contents), assign(opts, {
+            return nano.process(String(file.contents), assign(opts, {
                 map: (file.sourceMap) ? {annotation: false} : false,
                 from: file.relative,
                 to: file.relative
@@ -28,7 +29,7 @@ module.exports = function (opts) {
                 if (result.map && file.sourceMap) {
                     applySourceMap(file, String(result.map));
                 }
-                file.contents = new Buffer(result.css);
+                file.contents = bufferFrom(result.css);
                 this.push(file);
                 cb();
             }.bind(this))
