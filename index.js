@@ -2,7 +2,7 @@
 
 var nano        = require('cssnano'),
     assign      = require('object-assign'),
-    PluginError = require('gulp-util').PluginError,
+    PluginError = require('plugin-error'),
     Transform   = require('stream').Transform,
     applySourceMap = require('vinyl-sourcemaps-apply'),
 
